@@ -10,26 +10,25 @@ script: jekyll build
 branches:
   only:
   - master
+  - develop
 
 # after building, copy the site into the gh-pages branch
 # and push back to Github
-after_success:
-- git clone https://$GITHUB_REPO
-- cd $(basename ${GITHUB_REPO%.git})
-- git config user.name "Travis CI"
-- git config user.email ${EMAIL}
-- rsync -az --delete --exclude '.git*' ../_site/ .
-- touch .nojekyll
-- git add -A .
-- git commit -m "Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}"
-- '([ "${TRAVIS_PULL_REQUEST}" = "false" ] && git push --force --quiet "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${PRODUCTION_TARGET_BRANCH} > /dev/null 2>&1) || ([ "${TRAVIS_PULL_REQUEST}" != "false" ] && git push --force --quiet "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${STAGING_TARGET_BRANCH} > /dev/null 2>&1) || echo "WARNING: git push to {GITHUB_REPO} failed"'
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: scripts/deploy.sh
+  on:
+    branch:
+    - master
+    - develop
 
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-  - GITHUB_REPO: github.com/literarymachine/jekyll-bare.git
-  - STAGING_TARGET_BRANCH: pages-staging
-  - PRODUCTION_TARGET_BRANCH: pages-production
+  - GITHUB_REPO=github.com/literarymachine/jekyll-bare.git
+  - STAGING_TARGET_BRANCH=pages-staging
+  - PRODUCTION_TARGET_BRANCH=pages-production
   - secure: kcyMwTY7OimEt/1ztXFHbZnJL6TGiy7BiH3zzj1cx4wYxsYskHC2Jh/WzK7WTJn3s1DHe9MAdrQQd/gAjUONqERXcUI/ygsqCH7WGeaQiJHU0i2RmEiD63OGpImk2RHmFQKQaDYV5R6Tl57A5/seBYiC0C/BHF5ORUMiGXHtpgnqoOJIwoFSEVZ/0TFKbOJdI51S7+jQJHUbbB08LQwRJtzRr4DF9mGNmL6SVdzGmL1Q3DhPH5v1yULZK7HF8MGCQUVObdBoepZKGR7wYdDHhZL35prPMNWlmyiR6kMCHnEVa2sEqh8bqE2Kn+m1vyx+af/1iavC6WF19NmuHzXNl3FGoMcbJT2ShwzlExkwq6qplZHEWJLNTiKg7s5SlD2AT5SY1ioaXBAxQyTVSDNy95JHXDvysDJC9si+wrAgM1cbXdsK2BsyQ0QI/bfNdoimTDk1Lllt6ye7l/aYWQyUq2F83LgBWqWGw5SQY38rcquBXh0c+Hxwkk2FuNVQzVoPpKmL2Cmzo5KFug7KbWCyh/d4xneVJ51obEtfjoUJOZXCUVz8Uz/XN2W1viV2mwR4nDNf/h7JlRT51qQdrHIolK5/ZQVhuYczjsBVdlq9ViGrltZfDYjj9SnJPzxhG1KIwUq9UbBVWyqvrD013m0toNLf3mW9HwsrYiqx9DAwoAI=
   - secure: 4lvAIDcIDmbCDcO913wF1uso3Id2YwPudfFhFM5kVHr3HM6GPb5pxVMEtmbxzbwYJXhNbBYeBa4DwqDIRjSObc5cef+CDQ2DFGaoyVvr+QkrusyxXUgGmKzB3JStA7cRvDCzwAegL4de1QcIc24i6bt8lpHz91GmQQmDPLLlbLy7lqRZQjXrfeCVVT44e2f39pRWdJ0egsf8U9KlhekzQLMML6crYARAthPi8L62ytHGuPkLNMEXX/ti2GYWeFJOm5lehTwV1uHo4x76xv/bKopRPSJIDbMGUQpmS5WeYN/Q0R/+0zndFwWvvGEQr0L+GOI7iOF6RL4+fE6X2ji+QzFtG+oOowAkHdinHWxJabM8XLZYM/RDh7XJw+71bDANvv29RwRNRxP7sfBPcv8xYAzJ/655z3R82TII6KuNtN9qAKKjp7dQw8U645sj2irNmuzWOJG+fj4DiqCK0SR9HtDWj8iJq7fsuHE26W5l5RjPqrCdxYrFE8kfq6csG1LG0LX21RIFsMrI0Bfwwo1gCT+ik4WlUqzM9l+iIIN3o258WtS4xTG0QUov5EiAv5P1kHH6uVsb+ZYfL7ILunyQHe9WYeBCKVLXCxRxMvIrmwwAEJtsRWdFWDmp0cdtwkpAA6E7whLdbX8M9kq7iIIRrY+LCwhm8SiJst+svLccI7w=
 
