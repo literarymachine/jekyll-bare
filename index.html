@@ -1,18 +1,18 @@
----
----
 <!DOCTYPE html>
   <html lang="en-US">
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="3;url={{ site.baseurl }}/{{ site.default_language }}/">
+    <meta http-equiv="refresh" content="3;url=/en/">
     <script language="javascript">
       var user_language = (navigator.language || navigator.userLanguage).split('-')[0];
       var enabled_languages = [];
       console.log(user_language);
-      {% for enabled_language in site.enabled_languages %}
-        enabled_languages.push("{{ enabled_language }}");
-      {% endfor %}
-      var default_language = "{{ site.default_language }}";
+      
+        enabled_languages.push("en");
+      
+        enabled_languages.push("de");
+      
+      var default_language = "en";
       if (enabled_languages.indexOf(user_language) != -1) {
         window.location.href = user_language + '/';
       } else {
@@ -22,6 +22,6 @@
     <title>Page Redirection</title>
   </head>
   <body>
-    If you are not redirected automatically, please click the link to continue to <a href="{{ site.baseurl }}/en/">{{ site.url }}{{ site.baseurl }}/{{ site.default_language }}/</a>.
+    If you are not redirected automatically, please click the link to continue to <a href="/en/">http://rightsstatements.org/en/</a>.
   </body>
 </html>
