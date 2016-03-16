@@ -14,13 +14,10 @@ branches:
 # after building, copy the site into the gh-pages branch
 # and push back to Github
 deploy:
-  skip_cleanup: true
   provider: script
   script: scripts/deploy.sh
   on:
-    branch:
-    - master
-    - develop
+    branch: master
 
 env:
   global:
