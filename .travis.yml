@@ -10,6 +10,7 @@ script: jekyll build
 branches:
   only:
   - master
+  - develop
 
 # after building, copy the site into the gh-pages branch
 # and push back to Github
