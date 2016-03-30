@@ -1,6 +1,6 @@
 # Site settings
 email: your-email@domain.com
-baseurl: ""
+baseurl: "/jekyll-bare"
 url: "http://rightsstatements.org"
 twitter_username: literarymachine
 github_username:  literarymachine
