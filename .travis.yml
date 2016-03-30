@@ -11,6 +11,7 @@ branches:
   only:
   - master
   - develop
+  - gh
 
 # after building, copy the site into the gh-pages branch
 # and push back to Github
@@ -22,6 +23,7 @@ deploy:
     branch:
     - master
     - develop
+    - gh
 
 env:
   global:
