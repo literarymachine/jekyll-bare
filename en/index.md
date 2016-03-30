@@ -8,3 +8,8 @@ This is the English landing page.
 
 {: .bla .blubb}
 Test
+
+{: .some-class}
+- one
+- two
+- three
